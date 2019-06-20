@@ -8,7 +8,7 @@ Plugin provides the following features:
 
 Key                  | Value
 -------------------- | --------------------
-Plugin Url           | https://plugins.jetbrains.com/plugin/
+Plugin Url           | https://plugins.jetbrains.com/plugin/12590-php-code-generator-
 ID                   | PHPCodeGenerator+
 
 ## Install
