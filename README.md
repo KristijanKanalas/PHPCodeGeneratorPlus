@@ -1,4 +1,4 @@
-# PHP code generator + [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# PHP code generator + ![JetBrains IntelliJ plugins](https://img.shields.io/jetbrains/plugin/d/12590-php-code-generator-.svg)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 PhpStorm plugin that let's you generate even more PHP code.
 
