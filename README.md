@@ -1,6 +1,6 @@
 # PHP code generator + ![JetBrains IntelliJ plugins](https://img.shields.io/jetbrains/plugin/d/12590-php-code-generator-.svg)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-PhpStorm plugin that let's you generate even more PHP code.
+PhpStorm plugin that lets you generate even more PHP code.
 
 Plugin provides the following features:
 - Generates calls for the setters of the declared variable (Shift +Ctrl + NUMPAD1)
