@@ -10,8 +10,8 @@
 
     Plugin provides the following features:
     <ul>
-      <li>Generates calls for the getters of the declared variable, if getters are fluent it will chain them (Shift +Ctrl + NUMPAD1)</li>
-      <li>Generates calls for the setters of the declared variable (Shift +Ctrl + NUMPAD2)</li>
+      <li>Generates calls for the getters of the declared variable (Shift +Ctrl + NUMPAD1)</li>
+      <li>Generates calls for the setters of the declared variable, if setters are fluent it will chain them (Shift +Ctrl + NUMPAD2)</li>
     </ul>
     ]]>
   </description>

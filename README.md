@@ -3,8 +3,8 @@
 PhpStorm plugin that lets you generate even more PHP code.
 
 Plugin provides the following features:
-- Generates calls for the getters of the declared variable, if getters are fluent it will chain them (Shift +Ctrl + NUMPAD1)
-- Generates calls for the getters of the declared variable (Shift +Ctrl + NUMPAD2)
+- Generates calls for the getters of the declared variable (Shift +Ctrl + NUMPAD1)
+- Generates calls for the setters of the declared variable, if setters are fluent it will chain them (Shift +Ctrl + NUMPAD2)
 
 Key                  | Value
 -------------------- | --------------------
