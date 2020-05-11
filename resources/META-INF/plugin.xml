@@ -5,13 +5,13 @@
   <vendor email="kanalaskristijan@gmail.com" url="https://kanalas.me">Kristijan Kanalaš</vendor>
 
   <description><![CDATA[
-    <p>Let's you generate more PHP code.</p>
+    <p>A plugin that lets you generate even more PHP code!</p>
     <br/>
 
     Plugin provides the following features:
     <ul>
-      <li>Generates calls for the getters of the declared variable</li>
-      <li>Generates calls for the setters of the declared variable</li>
+      <li>Generates calls for the getters of the declared variable, if getters are fluent it will chain them (Shift +Ctrl + NUMPAD1)</li>
+      <li>Generates calls for the setters of the declared variable (Shift +Ctrl + NUMPAD2)</li>
     </ul>
     ]]>
   </description>
