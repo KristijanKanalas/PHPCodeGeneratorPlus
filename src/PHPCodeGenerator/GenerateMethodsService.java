@@ -11,10 +11,11 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiRecursiveElementVisitor;
+import com.intellij.util.SmartList;
 import com.jetbrains.php.lang.psi.elements.Method;
 import com.jetbrains.php.lang.psi.elements.impl.ClassReferenceImpl;
 import com.jetbrains.php.lang.psi.elements.impl.PhpClassImpl;
-import kotlin.reflect.jvm.internal.impl.utils.SmartList;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
@@ -36,7 +37,7 @@ class GenerateMethodsService {
                             final Collection<PsiElement> selectedElementClass = new SmartList<>();
                             assignmentExpression.accept(new PsiRecursiveElementVisitor() {
                                 @Override
-                                public void visitElement(PsiElement element) {
+                                public void visitElement(@NotNull PsiElement element) {
                                     if (element instanceof ClassReferenceImpl) {
                                         if (element.getReference() != null) {
                                             selectedElementClass.add(element.getReference().resolve());
