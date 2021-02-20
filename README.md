@@ -3,8 +3,9 @@
 PhpStorm plugin that lets you generate even more PHP code.
 
 Plugin provides the following features:
-- Generates calls for the getters of the declared variable (Shift +Ctrl + NUMPAD1)
-- Generates calls for the setters of the declared variable, if setters are fluent it will chain them (Shift +Ctrl + NUMPAD2)
+- Generate calls for the getters of the declared variable (Shift + Ctrl + NUMPAD1)
+- Generate calls for the setters of the declared variable (Shift + Ctrl + NUMPAD2)
+- Generate calls for the fluent setters of the declared variable (Shift + Ctrl + NUMPAD3)
 
 Key                  | Value
 -------------------- | --------------------
@@ -17,8 +18,12 @@ ID                   | PHPCodeGenerator+
 ## Usage
 
 By placing your caret at an initialized variable and pressing `ALT + Insert` a PhpStorm code generator
-menu will popup you can then choose `Get getters` or `Get setters` option.
-Actions also have shortcuts `Shift + Ctrl + NUMPAD1` and `Shift + Ctrl + NUMPAD2`.
+menu will popup you can then choose `Get getters`, `Get setters`, `Get fluent setters` options.
 
 ## Authors
 - Kristijan Kanalaš (kanalaskristijan@gmail.com)
+
+## Support
+If you would like to support me feel free to
+
+[![](https://cdn.buymeacoffee.com/buttons/default-blue.png)](https://www.buymeacoffee.com/wSd4q6U)
