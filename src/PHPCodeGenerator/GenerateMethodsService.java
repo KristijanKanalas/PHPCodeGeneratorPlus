@@ -10,12 +10,10 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiRecursiveElementVisitor;
-import com.intellij.util.SmartList;
-import com.jetbrains.php.lang.psi.elements.Method;
-import com.jetbrains.php.lang.psi.elements.impl.ClassReferenceImpl;
-import com.jetbrains.php.lang.psi.elements.impl.PhpClassImpl;
-import org.jetbrains.annotations.NotNull;
+import com.jetbrains.php.PhpIndex;
+import com.jetbrains.php.lang.psi.elements.*;
+import com.jetbrains.php.lang.psi.elements.impl.FieldImpl;
+import com.jetbrains.php.lang.psi.elements.impl.VariableImpl;
 
 import java.util.Collection;
 
@@ -24,56 +22,60 @@ class GenerateMethodsService {
     static void generateMethods(AnActionEvent event, String typeOfMethod) {
         final Project project = event.getData(PlatformDataKeys.PROJECT);
         final Editor editor = event.getData(PlatformDataKeys.EDITOR);
-        if (editor != null) {
+        if (editor != null && project != null) {
             final CaretModel caret = editor.getCaretModel();
             PsiFile file = event.getData(LangDataKeys.PSI_FILE);
             if (file != null) {
                 PsiElement selectedElement = file.findElementAt(caret.getOffset());
                 if (selectedElement != null && selectedElement.getParent().getReference() != null) {
-                    PsiElement variableDeclaration = selectedElement.getParent().getReference().resolve();
-                    if (variableDeclaration != null) {
-                        PsiElement assignmentExpression = variableDeclaration.getContext();
-                        if (assignmentExpression != null) {
-                            final Collection<PsiElement> selectedElementClass = new SmartList<>();
-                            assignmentExpression.accept(new PsiRecursiveElementVisitor() {
-                                @Override
-                                public void visitElement(@NotNull PsiElement element) {
-                                    if (element instanceof ClassReferenceImpl) {
-                                        if (element.getReference() != null) {
-                                            selectedElementClass.add(element.getReference().resolve());
-                                        }
-                                    }
-                                    super.visitElement(element);
-                                }
-                            });
 
-                            Document document = editor.getDocument();
-                            boolean firstMethodGeneration = true;
-                            for (PsiElement initClass : selectedElementClass) {
-                                PhpClassImpl phpClass = (PhpClassImpl) initClass;
-                                for (Method method : phpClass.getMethods()) {
-                                    String methodName = method.getName();
-
-                                    // If method name has "set" on position 0 add it to editor
-                                    if (methodName.indexOf(typeOfMethod) == 0) {
-                                        boolean finalFirstSetter = firstMethodGeneration;
-                                        WriteCommandAction.runWriteCommandAction(project, () -> {
-                                                    if (finalFirstSetter) {
-                                                        caret.moveToOffset(caret.getVisualLineEnd());
-                                                        document.insertString(caret.getOffset(), "\n");
-                                                    }
-                                                    caret.moveToOffset(caret.getVisualLineEnd());
-                                                    document.insertString(caret.getOffset(), selectedElement.getText()+"->" + methodName + "();\n");
-                                                }
-                                        );
-                                    }
-                                    firstMethodGeneration = false;
-                                }
-                            }
-                        }
+                    PhpNamedElement variable = null;
+                    if (selectedElement.getParent().getReference().resolve() instanceof FieldImpl) {
+                        variable = (FieldImpl) selectedElement.getParent().getReference().resolve();
                     }
+
+                    if (selectedElement.getParent().getReference().resolve() instanceof VariableImpl) {
+                        variable = (VariableImpl) selectedElement.getParent().getReference().resolve();
+                    }
+
+                    if(variable != null) {
+                        Collection<PhpClass> qualifiedClasses = PhpIndex.getInstance(project).getClassesByFQN(variable.getType().toString());
+                        PhpClass phpClass = qualifiedClasses.iterator().next();
+//                    Method myMethod = myClass.findMethodByName("setMake");
+//                    System.out.println(myMethod.getDocType()); this one good
+
+                        writeMethods(editor.getDocument(), phpClass.getMethods(), typeOfMethod, project, caret, selectedElement);
+                    }
+
+
+
                 }
             }
+        }
+    }
+
+    private static void writeMethods(Document document, Collection<Method> methods, String typeOfMethod,
+                                     Project project, CaretModel caret, PsiElement selectedElement) {
+
+        boolean firstMethodGeneration = true;
+
+        for (Method method : methods) {
+            String methodName = method.getName();
+
+            // If method name has "set" on position 0 add it to editor
+            if (methodName.indexOf(typeOfMethod) == 0) {
+                boolean finalFirstSetter = firstMethodGeneration;
+                WriteCommandAction.runWriteCommandAction(project, () -> {
+                            if (finalFirstSetter) {
+                                caret.moveToOffset(caret.getVisualLineEnd());
+                                document.insertString(caret.getOffset(), "\n");
+                            }
+                            caret.moveToOffset(caret.getVisualLineEnd());
+                            document.insertString(caret.getOffset(), selectedElement.getText()+"->" + methodName + "();\n");
+                        }
+                );
+            }
+            firstMethodGeneration = false;
         }
     }
 }
